@@ -1,8 +1,10 @@
 const { Telegraf } = require('telegraf')
 const http = require('http')
+const axios = require('axios')
+const config = require('./config.js')
 
-const BOT_TOKEN = require('./config.js').BOT_TOKEN
-const WEATHER_API_KEY = require('./config.js').WEATHER_API_KEY
+const BOT_TOKEN = config.BOT_TOKEN
+const WEATHER_API_KEY = config.WEATHER_API_KEY
 
 const bot = new Telegraf(BOT_TOKEN)
 
@@ -14,10 +16,22 @@ bot.start(ctx => ctx.reply('Enter city name'))
 
 bot.help((ctx) => ctx.reply('I can\'t help you'))
 
-bot.on('text', ctx => {
+bot.on('text', async ctx => {
    const userText = ctx.message.text
 
-   ctx.reply(userText)
+   try {
+      const response = await axios.get(`http://api.weatherstack.com/current?access_key=${ WEATHER_API_KEY }&query=${ userText }`)
+      const {
+         location: { name, country },
+         current: { temperature, weather_descriptions }
+      } = response.data
+
+      const formatData = `${ name }, ${ country } \nTemperature: ${ temperature }, ${ weather_descriptions }`
+
+      ctx.reply(formatData)
+   } catch (e) {
+      ctx.reply('This city does not exist')
+   }
 })
 
 bot.launch()
