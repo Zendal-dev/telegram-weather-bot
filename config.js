@@ -1,0 +1,4 @@
+module.exports = {
+  "BOT_TOKEN": "1483005445:AAGCiDsDJteOgmIeY0-IA71wy1nO9WbVFmU",
+  "WEATHER_API_KEY": "ed15d47066f73694fc76626396f6b5d1"
+}

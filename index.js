@@ -1,9 +1,8 @@
-// require('dotenv').config({ path: './.env' })
 const { Telegraf } = require('telegraf')
 const http = require('http')
 
-const BOT_TOKEN = process.env.BOT_TOKEN
-const WEATHER_API_KEY = process.env.WEATHER_API_KEY
+const BOT_TOKEN = require('./config.js').BOT_TOKEN
+const WEATHER_API_KEY = require('./config.js').WEATHER_API_KEY
 
 const bot = new Telegraf(BOT_TOKEN)
 
