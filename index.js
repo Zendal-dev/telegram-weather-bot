@@ -1,4 +1,4 @@
-require('dotenv').config({ path: `${__dirname}/.env` })
+require('dotenv').config({ path: './.env' })
 const { Telegraf } = require('telegraf')
 const http = require('http')
 
